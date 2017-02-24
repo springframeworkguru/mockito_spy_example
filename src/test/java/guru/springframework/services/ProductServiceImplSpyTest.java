@@ -16,25 +16,22 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 
 @RunWith(MockitoJUnitRunner.class)
-public class ProductImplSpyTest {
-   @Spy
-   private ProductServiceImpl prodServiceSpy;
-   @Mock
-   private ProductRepository productRepository;
-   @Mock
-   private Product product;
+public class ProductServiceImplSpyTest {
+    @Spy
+    private ProductServiceImpl prodServiceSpy;
+    @Mock
+    private ProductRepository productRepository;
+    @Mock
+    private Product product;
 
     @Test(expected=NullPointerException.class)
     public void shouldThrowNullPointerException_whenGetProductByIdIsCalledWithoutContext() throws Exception {
-        //Arrange
-        when(productRepository.findOne(5)).thenReturn(product);
         //Act
         Product retrievedProduct = prodServiceSpy.getProductById(5);
         //Assert
         assertThat(retrievedProduct, is(equalTo(product)));
     }
 
-    @Test(expected=NullPointerException.class)
     public void shouldThrowNullPointerException_whenSaveProductIsCalledWithoutContext() throws Exception {
         //Arrange
         Mockito.doReturn(product).when(productRepository).save(product);
@@ -52,7 +49,6 @@ public class ProductImplSpyTest {
         Product retrievedProduct = prodServiceSpy.getProductById(5);
         //Assert
         Mockito.verify(prodServiceSpy).getProductById(5);
-
     }
     @Test
     public void shouldVerifyThatSaveProductIsNotCalled() throws Exception {
