@@ -15,8 +15,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 
 
-public class ProductImplMockTest {
-    @InjectMocks
+public class ProductServiceImplMockTest {
+
     private ProductServiceImpl productServiceImpl;
     @Mock
     private ProductRepository productRepository;
@@ -25,6 +25,8 @@ public class ProductImplMockTest {
     @Before
     public void setupMock() {
         MockitoAnnotations.initMocks(this);
+        productServiceImpl=new ProductServiceImpl();
+        productServiceImpl.setProductRepository(productRepository);
     }
     @Test
     public void shouldReturnProduct_whenGetProductByIdIsCalled() throws Exception {
@@ -49,7 +51,7 @@ public class ProductImplMockTest {
     public void shouldCallDeleteMethodOfProductRepository_whenDeleteProductIsCalled() throws Exception {
         // Arrange
         doNothing().when(productRepository).delete(5);
-        ProductRepository my = Mockito.mock(ProductRepository.class, Mockito.CALLS_REAL_METHODS);
+        ProductRepository my = Mockito.mock(ProductRepository.class);
         // Act
         productServiceImpl.deleteProduct(5);
         // Assert
